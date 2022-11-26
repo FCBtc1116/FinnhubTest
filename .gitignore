@@ -1,11 +1,11 @@
 # dependencies
-/finhubtest-be/node_modules
-/finhubtest-fe/node_modules
+/client/node_modules
+/server/node_modules
 
-/finhubtest-fe/npm-debug.log*
-/finhubtest-fe/yarn-debug.log*
-/finhubtest-fe/yarn-error.log*
+/client/npm-debug.log*
+/client/yarn-debug.log*
+/client/yarn-error.log*
 
-/finhubtest-be/npm-debug.log*
-/finhubtest-be/yarn-debug.log*
-/finhubtest-be/yarn-error.log*
+/server/npm-debug.log*
+/server/yarn-debug.log*
+/server/yarn-error.log*

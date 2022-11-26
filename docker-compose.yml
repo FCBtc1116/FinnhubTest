@@ -1,35 +1,43 @@
-version: '3.8'
+version: '3.7'
 
 services:
-
-  nginx:
-    depends_on:
-      - api
-      - client
-    restart: always
+  server:
     build:
+      context: ./server
       dockerfile: Dockerfile
-      context: ./nginx
+    image: myapp-server
+    container_name: myapp-node-server
+    command: npm start
+    volumes:
+      - ./server/:/usr/src/app
+      - /usr/src/app/node_modules
     ports:
-      - "3050:80"
-
-  api:
-    build:
-      dockerfile: Dockerfile
-      context: "./server"
-    volumes:
-      - /app/node_modules
-      - ./server:/app
-    environment:
-      <<: *common-variables
-
+      - "3001:3001"
+    networks:
+      - app-network
   client:
-    stdin_open: true
-    environment:
-      - CHOKIDAR_USEPOLLING=true
     build:
-      dockerfile: Dockerfile
       context: ./client
+      dockerfile: Dockerfile
+    image: myapp-client
+    container_name: myapp-react-client
+    command: npm start
     volumes:
-      - /app/node_modules
-      - ./client:/app
+      - ./client/:/usr/app
+      - /usr/app/node_modules
+    depends_on:
+      - server
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+
+networks:
+    app-network:
+        driver: bridge
+
+volumes:
+    data-volume:
+    node_modules:
+    web-root:
+      driver: local

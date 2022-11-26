@@ -11,7 +11,7 @@ const corsOptions ={
     origin:'http://localhost:3000', 
     credentials:true,            //access-control-allow-credentials:true
     optionSuccessStatus:200
-}
+};
 app.use(cors(corsOptions));
 
 const api_key = finnhub.ApiClient.instance.authentications['api_key'];
@@ -20,13 +20,20 @@ const finnhubClient = new finnhub.DefaultApi()
 
 app.post("/api", (req, res) => {
     finnhubClient.quote(req.body.symbol, (error, data, response) => {
-        if(data == null) res.send({
-            price: -2,
-            percentChange: -2
-        }); else res.send({
-            price: data.c ? data.c : -1,
-            percentChange: data.c ? data.dp : -1,
-        });
+        if(data == null) // Can not connect with Finnhub 
+            res.send({
+                price: -2,
+                percentChange: -2
+            });
+        else //Get Data from Finnhub
+            /* 
+                data.c == 0 then Symbol is incorrect
+                else return data
+            */
+            res.send({
+                price: data.c ? data.c : -1,
+                percentChange: data.c ? data.dp : -1,
+            });
     });
 });
 

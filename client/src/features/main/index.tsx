@@ -20,8 +20,10 @@ import {
 } from './fetchSlice';
 
 export function Main() {
+  
   const fetchData = useAppSelector(getFetch);
   const dispatch = useAppDispatch();
+
   const [symbol, setSymbol] = useState('AAPL');
 
   return (

@@ -14,11 +14,7 @@ const initialState: FetchState = {
   status: 'idle',
 };
 
-// The function below is called a thunk and allows us to perform async logic. It
-// can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
-// will call the thunk with the `dispatch` function as the first argument. Async
-// code can then be executed and other actions can be dispatched. Thunks are
-// typically used to make async requests.
+// Fetch Data from Server and return
 export const fetchAsync = createAsyncThunk(
   'fetch/fetchData',
   async (symbol: string) => {
@@ -31,7 +27,6 @@ export const fetchAsync = createAsyncThunk(
 export const fetchSlice = createSlice({
   name: 'fetch',
   initialState,
-  // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -39,9 +34,11 @@ export const fetchSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchAsync.pending, (state) => {
+        // Send request to Server
         state.status = 'loading';
       })
       .addCase(fetchAsync.fulfilled, (state, action) => {
+        // After Get Data from Server
         state.status = 'idle';
         state.price = action.payload.price;
         state.percent = action.payload.percent;

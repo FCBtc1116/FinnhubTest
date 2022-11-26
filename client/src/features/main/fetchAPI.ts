@@ -1,7 +1,7 @@
 import axios from 'axios';
 const api = axios.create({baseURL: 'http://localhost:3001'})
 
-// A mock function to mimic making an async request for data
+// Fetch Data From Server
 export async function fetchData(symbol: string) {
   let price:number = 0;
   let percentChange:number = 0;
